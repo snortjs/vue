@@ -1,6 +1,6 @@
 <template>
-  <div class="login">
-    <h1>This is an about page</h1>
+  <div class="signup">
+    <h1>Registration</h1>
     <div class="container">
   <div class="row">
     <div class="col-sm">
