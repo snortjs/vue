@@ -1,4 +1,4 @@
-# instagrammy
+# instaclone
 
 ## Project setup
 ```
