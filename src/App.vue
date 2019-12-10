@@ -19,10 +19,11 @@
                 </form>
                 <router-link v-if="!authenticated" class="btn btn-info my-2 my-sm-0 mr-2" to="/login">Login</router-link>
                 <span v-if="authenticated">
-                  {{ userName }}
+                  {{ userEmail }}
                   <a @click="logout" class="btn btn-info my-2 my-sm-0 mr-2" href="#">Logout</a>
+                  <router-link class="btn btn-info my-2 my-sm-0 mr-2" to="/promjenalozinke">Promjena lozinke</router-link>
                 </span>
-                <router-link class="btn btn-outline my-2 my-sm-0 mr-2" to="/signup">Signup</router-link>
+                <router-link v-if="!authenticated" class="btn btn-outline my-2 my-sm-0 mr-2" to="/signup">Signup</router-link>
             </div>
           </nav>
         </div>
@@ -32,7 +33,7 @@
 
       <div class="container">
 
-        <router-view/>
+        <router-view />
 
     </div>
 
@@ -50,8 +51,25 @@ export default {
 
   methods: {
     logout() {
-      store.authenticated = false
+     firebase.auth().signOut()
     }
+  },
+  mounted(){
+    firebase.auth().onAuthStateChanged(user => {
+ if (user) {
+   this.authenticated=true
+   this.userEmail=user.email
+   if (this.$route.name !== 'home')
+ this.$router.push({name: 'home'})
+ console.log(user.email);
+ }
+ else {
+ this.authenticated=false
+ if (this.$route.name !== 'login')
+ this.$router.push({name: 'login'})
+ console.log("No user");
+ }
+});
   }
 }
 </script>
